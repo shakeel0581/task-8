@@ -23,7 +23,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Server from "./Server";
 import AsyncStorage from "@react-native-community/async-storage";
 
-const App = () => {
+const AdminLogin = () => {
   let navigation = useNavigation();
 
   const [email, setEmail] = React.useState('');
@@ -31,22 +31,17 @@ const App = () => {
   const [password, setPassword] = React.useState('');
 
   const LogIn = () => {
-    // navigation.navigate('Nav');
-    console.log(email,memberId,password)
-    Server.post('api/login',{
-      email: email,
-      cnic: memberId,
-      password: password
-  }).
-    then(res => {
-      console.log(res.data)
-      AsyncStorage.setItem('Login_row',JSON.stringify(res.data)).
-      then(res => {
-        navigation.navigate('General');
-        alert('Login Success');
-      })
-    }).
-    catch(err => alert('Invalid CNIC, Email or Password'));
+    if (email == 'superadmin@gmail.com' && password == '123') {
+        alert('super admin ');
+    } else if (email == 'admin@gmail.com' && password == '123') {
+        alert('admin');
+    }else if (email == '' && password == '') {
+        alert('super admin');
+    }else if (email == '' && password == '') {
+        alert('super admin');
+    }else{
+        alert("Invalid email & password");
+    }
   }
 
   return (
@@ -84,25 +79,6 @@ const App = () => {
       />
       <Form style={styles.form}>
         <KeyboardAwareScrollView>
-          <View style={styles.inputOuter}>
-            <Text style={{marginLeft: '1%', fontSize: 14}}> Member ID </Text>
-            <Item
-              style={{
-                width: '95%',
-                marginLeft: '2%',
-                marginTop: '5%',
-                borderColor: 'black',
-                borderWidth: 1,
-              }}
-              rounded>
-              <Input 
-              value={memberId}
-              onChangeText={(val) => setMemberId(val)}
-              placeholder=""
-               />
-              <Icon active name="contacts" type="AntDesign" />
-            </Item>
-          </View>
 
           <View style={styles.inputOuter}>
             <Text style={{marginLeft: '1%', marginTop: '2%', fontSize: 14}}>
@@ -148,30 +124,6 @@ const App = () => {
             </Item>
           </View>
 
-          <View
-            style={[
-              styles.inputOuter,
-              {
-                marginTop: '10%',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              },
-            ]}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <CheckBox checked={false} style={{height: 15, width: 15}} />
-              <Text style={{fontSize: 16, marginLeft: '10%'}}>Remember Me</Text>
-            </View>
-            <View style={{flexDirection: 'row'}}>
-              <Text style={{fontSize: 16, marginLeft: '4%'}}>
-                Forgot Password?
-              </Text>
-            </View>
-          </View>
         </KeyboardAwareScrollView>
       </Form>
 
@@ -203,8 +155,6 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   form: {
-    // borderWidth: 1,
-    height: '40%',
     width: '95%',
     marginTop: '10%',
     borderRadius: 20,
@@ -223,4 +173,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default AdminLogin;

@@ -25,7 +25,7 @@ import Server from "./Server";
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import { registerAnimation } from 'react-native-animatable';
 
-const App = () => {
+const App = (props) => {
   let [show, setShow] = useState(false);
   const [date, setDate] = useState(new Date(1598051730000));
   const [password, setPassword] = useState('12345678');
@@ -65,7 +65,7 @@ const App = () => {
       console.log(res)
       AsyncStorage.setItem('Login_row',JSON.stringify(res.data)).
       then(res => {
-        navigation.navigate('Nav');
+        props.navigation.navigate('General');
         alert('Registration Success');
       })
     }).

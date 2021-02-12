@@ -19,7 +19,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import Server from "./Server";
 import Loader from "./Loader";
 
-const ListAvatarExample = () => {
+const Events = () => {
   let navigation = useNavigation();
   const [eventsData, setEventsData] = React.useState([]);
   const [loader, setloader] = React.useState(true);
@@ -33,7 +33,7 @@ const ListAvatarExample = () => {
             } else {
                 const login_row = JSON.parse(val);
                 // console.log(login_row.access_token);
-                Server.get('api/announcement',{
+                Server.get('/api/event',{
                     headers:{
                         'Authorization': `Bearer ${login_row.access_token}`
                     }
@@ -44,17 +44,13 @@ const ListAvatarExample = () => {
                     setloader(false);
                 }).
                 catch(err => {
-                  alert(err);
-                  setloader(false)
+                    alert(err);
+                    setloader(false);
                 });
             }
-        });
-    },[])
-
-    const renderItem = ({ item }) => (
-        <Text> {item.title}</Text>
-      );
-
+        })
+    },[]);
+    
   return (
     <Container>
       <Header
@@ -69,7 +65,7 @@ const ListAvatarExample = () => {
           </TouchableOpacity>
         </Left>
         <Body>
-          <Text>Announcements</Text>
+          <Text>Events</Text>
         </Body>
       </Header>
       <Loader loading={loader} />
@@ -114,4 +110,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ListAvatarExample; 
+export default Events; 

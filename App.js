@@ -18,6 +18,7 @@ import {
 import {Container, Body, Title} from 'native-base';
 import AsyncStorage from '@react-native-community/async-storage';
 import App from './component/splashScreen';
+import admin from './component/AdminLogin';
 import Welcome from './component/WelcomeScreen';
 import LoginScreen from './component/Login';
 import Register from './component/Register';
@@ -26,6 +27,7 @@ import MyServices from './component/MyServices';
 import Notification from './component/Notification';
 import AboutUs from './component/AboutUs';
 import Announcements from './component/Announcements';
+import Events from './component/Events';
 import DonateUs from './component/DonateUs';
 import OurServices from './component/OurServices';
 import Settings from './component/Settings';
@@ -95,6 +97,11 @@ const [auth, setAuth] = React.useState([]);
           options={{headerShown: false}}
         />
         <Stack.Screen
+          name="Events"
+          component={Events}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
           name="DonateUs"
           component={DonateUs}
           options={{headerShown: false}}
@@ -112,6 +119,11 @@ const [auth, setAuth] = React.useState([]);
         <Stack.Screen
           name="Update_Profile"
           component={Update_Profile}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="admin"
+          component={admin}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

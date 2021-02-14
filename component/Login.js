@@ -26,20 +26,36 @@ import AsyncStorage from "@react-native-community/async-storage";
 const App = () => {
   let navigation = useNavigation();
 
-  const [email, setEmail] = React.useState('');
-  const [memberId, setMemberId] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  React.useEffect(() => {
+    inisilization();
+    navigation.addListener('focus', () => {
+      inisilization();
+    });
+  }, []);
+
+  const inisilization = () => {
+    AsyncStorage.getItem('Login_row').
+      then(val => {
+        if (val != null) {
+          navigation.goBack();
+        } 
+      });
+  }
+
+  const [email, setEmail] = React.useState('owais.raza@codup.io');
+  const [memberId, setMemberId] = React.useState('42201-2399157-3');
+  const [password, setPassword] = React.useState('test123');
 
   const LogIn = () => {
     // navigation.navigate('Nav');
-    console.log(email,memberId,password)
+    // console.log(email,memberId,password)
     Server.post('api/login',{
       email: email,
       cnic: memberId,
       password: password
   }).
     then(res => {
-      console.log(res.data)
+      // console.log(res.data)
       AsyncStorage.setItem('Login_row',JSON.stringify(res.data)).
       then(res => {
         navigation.navigate('General');
@@ -157,15 +173,6 @@ const App = () => {
                 justifyContent: 'space-between',
               },
             ]}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <CheckBox checked={false} style={{height: 15, width: 15}} />
-              <Text style={{fontSize: 16, marginLeft: '10%'}}>Remember Me</Text>
-            </View>
             <View style={{flexDirection: 'row'}}>
               <Text style={{fontSize: 16, marginLeft: '4%'}}>
                 Forgot Password?

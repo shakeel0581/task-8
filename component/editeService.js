@@ -101,7 +101,7 @@ const OurServices = () => {
         })
     }
 
-    const updateService = () => {
+    const deleteService = () => {
       setloader(true);
       setModalDel(false);
       
@@ -111,7 +111,7 @@ const OurServices = () => {
                 navigation.navigate('LoginScreen');
             } else {
               const login_row = JSON.parse(val);
-              Server.put(`api/service/${idDel}`,{
+              Server.post('api/service',{
                 services:service,
                 form_object:"{name: 'Amjad'}",
                 attachments : null
@@ -122,7 +122,7 @@ const OurServices = () => {
                 }
               }).
               then(res => {
-                setService('');
+                setIdDel('');
                 Server.get('api/service',{
                   headers:{
                       'Authorization': `Bearer ${login_row.access_token}`
@@ -174,125 +174,21 @@ const OurServices = () => {
             data={eventsData}
             renderItem={ ({item}) => 
                 <View style={styles.container}>
-                    <View style={{width:'90%'}}>
+                    <View style={{width:'70%'}}>
                       <Text style={styles.title}> {item.services}</Text>
                       <Text style={styles.desc}> {item.form_object}</Text>
                       <Text style={styles.desc}> status '{item.status}'</Text>
                       <Text style={styles.date}> {item.note}</Text>
                     </View>
                     
-                    <View style={{width:'10%',alignItems:'flex-end',alignSelf:'center'}}>
+                    <View style={{width:'30%',alignItems:'flex-end',alignSelf:'center'}}>
                       {/* <Icon onPress={()=>{setModalDel(true);setIdDel(item.id)}} style={{marginBottom:15,color:'red'}} active name="delete" type="AntDesign" /> */}
-                      <Icon onPress={()=>{setModalDel(true);setIdDel(item.id);setService(item.services)}} style={{color:'green'}} active name="edit" type="AntDesign" />
+                      <Icon onPress={()=>{}} style={{color:'green'}} active name="edit" type="AntDesign" />
                     </View>
                 </View>
             }
             keyExtractor={(item) => item.id.toString()}
           />
-          <Modal
-              animationType={'fade'}
-              transparent={true}
-              visible={modal}
-              onRequestClose={() => setModal(false)}
-              on
-              >
-              <View style={styles.modalBody}>
-                <View style={styles.modalContainer}>
-                  <View style={{width:'100%',marginVertical:10}}>
-                    <View style={{flexDirection:'row',alignSelf:'center'}}>
-                      <Text style={{fontSize:14,fontWeight:'bold',color:'#187ce6',}}>Add Services</Text>
-                    </View> 
-                    <View style={{flexDirection: 'row', alignItems: 'center',margin:10}}>
-                      <View style={{flex: 1, height: 1, backgroundColor: 'lightgray'}} />
-                    </View>
-                    <View style={styles.inputOuter}>
-                      <Text style={{marginLeft: '1%', marginTop: '2%', fontSize: 14}}>
-                        {' '}
-                        Service{' '}
-                      </Text>
-                      <Item
-                        style={{
-                          width: '95%',
-                          marginLeft: '2%',
-                          borderColor: 'black',
-                          borderWidth: 1,
-                          marginBottom:10
-                        }}
-                        rounded>
-                        <Input 
-                        style={{height:40}}
-                          value={service}
-                          onChangeText={(val) => setService(val)}
-                          placeholder=""
-                        />
-                      </Item>
-                    </View>
-                    <Button
-                      danger={true}
-                      style={styles.btns}
-                      rounded
-                      active={true}
-                      onPressIn={() => addService()}
-                      >
-                      <Text style={styles.btnTxt}>Add</Text>
-                    </Button>
-                  </View> 
-                  
-                </View>
-              </View>
-            </Modal>
-            <Modal
-              animationType={'fade'}
-              transparent={true}
-              visible={modalDel}
-              onRequestClose={() => setModalDel(false)}
-              on
-              >
-              <View style={styles.modalBody}>
-                <View style={styles.modalContainer}>
-                  <View style={{width:'100%'}}>
-                  <View style={{flexDirection:'row',alignSelf:'center',marginVertical:10}}>
-                      <Text style={{fontSize:14,fontWeight:'bold',color:'#187ce6',}}>Update Services</Text>
-                    </View>
-                    <View style={{flexDirection: 'row', alignItems: 'center',marginBottom:10}}>
-                      <View style={{flex: 1, height: 1, backgroundColor: 'lightgray'}} />
-                    </View>
-                  <View style={styles.inputOuter}>
-                      <Text style={{marginLeft: '1%', marginTop: '2%', fontSize: 14}}>
-                        {' '}
-                        Service{' '}
-                      </Text>
-                      <Item
-                        style={{
-                          width: '95%',
-                          marginLeft: '2%',
-                          borderColor: 'black',
-                          borderWidth: 1,
-                          marginBottom:10
-                        }}
-                        rounded>
-                        <Input 
-                        style={{height:40}}
-                          value={service}
-                          onChangeText={(val) => setService(val)}
-                          placeholder=""
-                        />
-                      </Item>
-                    </View>
-                    <Button
-                      danger={true}
-                      style={[styles.btns]}
-                      rounded
-                      active={true}
-                      onPressIn={() => updateService()}
-                      >
-                      <Text style={styles.btnTxt}>Update</Text>
-                    </Button>
-                  </View> 
-                  
-                </View>
-              </View>
-            </Modal>
     
     </Container>    
   );

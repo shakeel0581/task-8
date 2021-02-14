@@ -26,6 +26,23 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import { registerAnimation } from 'react-native-animatable';
 
 const App = (props) => {
+
+  React.useEffect(() => {
+    inisilization();
+    navigation.addListener('focus', () => {
+      inisilization();
+    });
+  }, []);
+
+  const inisilization = () => {
+    AsyncStorage.getItem('Login_row').
+      then(val => {
+        if (val != null) {
+          navigation.goBack();
+        } 
+      });
+  }
+
   let [show, setShow] = useState(false);
   const [date, setDate] = useState(new Date(1598051730000));
   const [password, setPassword] = useState('12345678');
@@ -62,7 +79,6 @@ const App = (props) => {
     }
   }).
     then(res => {
-      console.log(res)
       AsyncStorage.setItem('Login_row',JSON.stringify(res.data)).
       then(res => {
         props.navigation.navigate('General');
